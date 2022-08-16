@@ -138,11 +138,21 @@ def publication_photo(file, saved_photo):
     response.raise_for_status()
 
 
+def delete_file_and_comment(file):
+    os.remove(os.path.join('files', file))
+
+    comment_file = file.split('.')[0] + '.txt'
+    os.remove(os.path.join('alt', comment_file))
+
+
 if __name__ == '__main__':
     for path, dirs, files in os.walk('files'):
         pictures = files
     file = random.choice(pictures)
+
     upload_address = get_upload_address()
     info_from_server = load_photo_to_server(upload_address, file=file)
     saved_photo = save_photo_in_group_album(info_from_server, upload_address, file=file)
     publication_photo(file=file, saved_photo=saved_photo)
+
+    delete_file_and_comment(file)
