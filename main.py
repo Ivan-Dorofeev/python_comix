@@ -1,4 +1,5 @@
 import os
+import random
 from pprint import pprint
 
 import requests
@@ -66,6 +67,7 @@ def find_file_comment(file):
         if searched_file in files:
             with open(os.path.join('alt', searched_file), 'r') as ff:
                 return ff.read()
+        return ''
 
 
 def save_photo_in_group_album(info_from_server, upload_address, file):
@@ -137,7 +139,9 @@ def publication_photo(file, saved_photo):
 
 
 if __name__ == '__main__':
-    file = '90s_flowchart.png'
+    for path, dirs, files in os.walk('files'):
+        pictures = files
+    file = random.choice(pictures)
     upload_address = get_upload_address()
     info_from_server = load_photo_to_server(upload_address, file=file)
     saved_photo = save_photo_in_group_album(info_from_server, upload_address, file=file)
