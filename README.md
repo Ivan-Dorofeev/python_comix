@@ -41,7 +41,7 @@
 
 И получите свой первый пост:
 
-![image](https://user-images.githubusercontent.com/58893102/184844402-00b89004-a450-4213-b576-1adf5320446a.png)
+![image](https://user-images.githubusercontent.com/58893102/184844819-9220b6de-2def-4102-b63c-e24c5e1de0d0.png)
 
 Полезные ссылки (пример работы кода):
 
