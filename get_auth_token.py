@@ -11,7 +11,7 @@ def get_auth_token():
     params = {'client_id': client_id,
               'redirect_uri': '',
               'display': 'mobile',
-              'scope': 'photo,groups,wall,offline',
+              'scope': 'photos,groups,wall,offline',
               'response_type': 'token',
               'state': '',
               'revoke': '',
