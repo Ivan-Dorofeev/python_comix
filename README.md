@@ -35,5 +35,8 @@
 > python main.py 
 
 И получите свой первый пост:
+![image](https://user-images.githubusercontent.com/58893102/184844402-00b89004-a450-4213-b576-1adf5320446a.png)
 
+Полезные ссылки (пример работы кода):
+https://vk.com/python_comics
 
