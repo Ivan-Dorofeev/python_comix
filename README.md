@@ -10,33 +10,40 @@
 Комментарии к картинкам скрипт забирает из папки ```alt```
 
 Названия картинок и файлов с комментариями должны быть идентичными, напрмер:
-> 50_ways.png - файл картинки
-> 50_ways.txt - файл с комментарием внутри
+
+  > 50_ways.png - файл картинки
+
+  > 50_ways.txt - файл с комментарием внутри
 
 ### Запуск
 
 * Скачайте код.
+
 * Установите зависимости командой:
-  
-> pip install -r requirements.txt
+    
+  > pip install -r requirements.txt
 
 * Получите свой токен, запустив команду:
 
-> python get_auth_token.py
+  > python get_auth_token.py
 
 * Создайте файл ```.env``` и пропишите в него:
 
-> APPS_CLIENT_ID - id вашего приложения в VK
-> ACCESS_TOKEN - полученный токен пунктом выше
-> GROUP_ID - id вашей группы
+  > APPS_CLIENT_ID - id вашего приложения в VK
+
+  > ACCESS_TOKEN - полученный токен пунктом выше
+
+  > GROUP_ID - id вашей группы
 
 * Запустите скрипт командой:
 
-> python main.py 
+  > python main.py 
 
 И получите свой первый пост:
+
 ![image](https://user-images.githubusercontent.com/58893102/184844402-00b89004-a450-4213-b576-1adf5320446a.png)
 
 Полезные ссылки (пример работы кода):
+
 https://vk.com/python_comics
 
