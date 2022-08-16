@@ -3,7 +3,7 @@ import requests
 from dotenv import load_dotenv
 
 
-def main():
+def get_auth_token():
     load_dotenv()
     client_id = os.environ['APPS_CLIENT_ID']
 
@@ -23,4 +23,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    get_auth_token()

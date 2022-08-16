@@ -4,7 +4,7 @@ import requests
 from urllib.parse import urlparse
 
 
-def main():
+def download_comics():
     for number_file in range(405, 2658):
         all_img_url = f"https://xkcd.com/{number_file}/info.0.json"
         response = requests.get(all_img_url)
@@ -27,5 +27,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    download_comics()
     print('ready')
