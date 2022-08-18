@@ -104,7 +104,7 @@ def publication_photo(file, saved_photo, token, group_id):
 def delete_file_and_comment(file):
     os.remove(os.path.join('files', file))
 
-    comment_file = file.split('.')[0] + '.txt'
+    comment_file = os.path.splitext(file)[0] + '.txt'
     os.remove(os.path.join('alt', comment_file))
 
 
