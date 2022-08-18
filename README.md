@@ -17,22 +17,24 @@
 
 * Скачайте код.
 * Установите зависимости командой:
-  
-> pip install -r requirements.txt
+
+    ```pip install -r requirements.txt```
 
 * Получите свой токен, запустив команду:
 
-> python get_auth_token.py
+    ```python get_auth_token.py```
 
 * Создайте файл ```.env``` и пропишите в него:
 
-> APPS_CLIENT_ID - id вашего приложения в VK
-> ACCESS_TOKEN - полученный токен пунктом выше
-> GROUP_ID - id вашей группы
+    ```APPS_CLIENT_ID - id вашего приложения в VK```
+
+    ```ACCESS_TOKEN - полученный токен пунктом выше```
+
+    ```GROUP_ID - id вашей группы```
 
 * Запустите скрипт командой:
 
-> python main.py 
+    ```python main.py```
 
 И получите свой первый пост:
 
