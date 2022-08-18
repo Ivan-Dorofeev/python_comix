@@ -1,29 +1,31 @@
 import os.path
+import random
 
 import requests
 from urllib.parse import urlparse
 
 
-def download_comics():
-    for number_file in range(405, 2658):
-        all_img_url = f"https://xkcd.com/{number_file}/info.0.json"
-        response = requests.get(all_img_url)
-        response.raise_for_status()
-        page = response.json()
-        url_img = page['img']
-        comment = page['alt']
-        *_, img_file = urlparse(url_img).path.split('/')
-        img_name, img_extension = img_file.split('.')
+def download_random_comic():
+    random_number_page = random.randint(1, 2660)
+    all_img_url = f"https://xkcd.com/{random_number_page}/info.0.json"
+    response = requests.get(all_img_url)
+    response.raise_for_status()
+    page = response.json()
 
-        response_img = requests.get(url_img)
-        response_img.raise_for_status()
+    url_img = page['img']
+    comment = page['alt']
+    *_, img_file = urlparse(url_img).path.split('/')
+    img_name, *_ = img_file.split('.')
 
-        with open(os.path.join('files', img_file), 'wb') as img_file:
-            img_file.write(response_img.content)
+    response_img = requests.get(url_img)
+    response_img.raise_for_status()
 
-        with open(os.path.join('alt', f'{img_name}.txt'), 'w') as text_file:
-            text_file.write(comment)
+    with open(os.path.join('files', img_file), 'wb') as img_file:
+        img_file.write(response_img.content)
+
+    with open(os.path.join('alt', f'{img_name}.txt'), 'w') as text_file:
+        text_file.write(comment)
 
 
 if __name__ == '__main__':
-    download_comics()
+    download_random_comic()

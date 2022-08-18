@@ -3,6 +3,8 @@ import random
 import requests
 from dotenv import load_dotenv
 
+from download_comics import download_random_comic
+
 
 def get_upload_address(token, group_id):
     url = 'https://api.vk.com/method/photos.getWallUploadServer'
@@ -110,6 +112,8 @@ if __name__ == '__main__':
     load_dotenv()
     token = os.environ['ACCESS_TOKEN']
     group_id = os.environ['GROUP_ID']
+
+    download_random_comic()
 
     for path, dirs, files in os.walk('files'):
         pictures = files
