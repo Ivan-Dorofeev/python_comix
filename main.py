@@ -79,10 +79,6 @@ def publish_photo(comment, saved_photo, token, group_id):
     response.raise_for_status()
 
 
-def delete_file_and_comment(file):
-    os.remove(file)
-
-
 if __name__ == '__main__':
     load_dotenv()
     token = os.environ['ACCESS_TOKEN']
@@ -95,4 +91,4 @@ if __name__ == '__main__':
     saved_photo = save_photo_in_group_album(response_from_server, upload_address, token=token, group_id=group_id)
     publish_photo(comment=comment, saved_photo=saved_photo, token=token, group_id=group_id)
 
-    delete_file_and_comment(file_path)
+    os.remove(file_path)
