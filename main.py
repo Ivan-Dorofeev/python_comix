@@ -17,8 +17,8 @@ def get_upload_address(token, group_id):
     response = requests.get(url, params=params)
     response.raise_for_status()
 
-    getted_upload_address = response.json()['response']
-    return getted_upload_address
+    upload_address = response.json()['response']
+    return upload_address
 
 
 def load_photo_to_server(upload_address, file):
@@ -56,7 +56,6 @@ def save_photo_in_group_album(info_from_server, upload_address, token, group_id)
 
 def publicate_photo(comment, saved_photo, token, group_id):
     url = 'https://api.vk.com/method/wall.post'
-    negative_group_id = f'-{group_id}'
 
     photo_id = saved_photo[0]['id']
     photo_owner_id = saved_photo[0]['owner_id']
@@ -65,7 +64,7 @@ def publicate_photo(comment, saved_photo, token, group_id):
         'access_token': token,
         'v': 5.131,
 
-        'owner_id': negative_group_id,
+        'owner_id': f'-{group_id}',
         'friends_only': 0,
         'from_group': 1,
         'message': comment,
