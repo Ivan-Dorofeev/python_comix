@@ -81,20 +81,10 @@ def publicate_photo(file, saved_photo, token, group_id):
         'from_group': 1,
         'message': message,
         'attachments': f'photo{photo_owner_id}_{photo_id}',
-        'services': '',
         'signed': 1,
-        'publish_date': '',
-        'lat': '',
-        'long': '',
-        'place_id': '',
-        'post_id': '',
-        'guid': '',
         'mark_as_ads': 0,
         'close_comments': 0,
-        'donut_paid_duration': '',
         'mute_notifications': 0,
-        'topic_id': '',
-        'copyright': '',
     }
 
     response = requests.post(url, params=params)
