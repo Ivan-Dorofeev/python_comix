@@ -23,9 +23,7 @@ def download_comics():
 
         with open(os.path.join('alt', f'{img_name}.txt'), 'w') as text_file:
             text_file.write(comment)
-        print('ready = ', all_img_url)
 
 
 if __name__ == '__main__':
     download_comics()
-    print('ready')

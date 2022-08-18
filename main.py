@@ -1,7 +1,5 @@
 import os
 import random
-from pprint import pprint
-
 import requests
 from dotenv import load_dotenv
 
@@ -16,7 +14,6 @@ def get_upload_address(token, group_id):
     }
 
     response = requests.get(url, params=params)
-    pprint(response.json())
     response.raise_for_status()
 
     getted_upload_address = response.json()['response']
@@ -30,7 +27,6 @@ def load_photo_to_server(upload_address, file):
             'photo': file,
         }
         response = requests.post(url, files=files)
-        pprint(response.json())
         response.raise_for_status()
 
     return response.json()
@@ -62,7 +58,6 @@ def save_photo_in_group_album(info_from_server, upload_address, file, token, gro
     }
 
     response = requests.post(url, params=params)
-    pprint(response.json())
     response.raise_for_status()
     return response.json()['response']
 
@@ -100,9 +95,7 @@ def publication_photo(file, saved_photo, token, group_id):
         'copyright': '',
     }
 
-    print(params['attachments'])
     response = requests.post(url, params=params)
-    pprint(response.json())
     response.raise_for_status()
 
 
