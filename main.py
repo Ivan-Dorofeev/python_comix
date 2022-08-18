@@ -35,7 +35,7 @@ def load_photo_to_server(upload_address, file):
 
 
 def find_file_comment(file):
-    searched_file = file.split('.')[0] + '.txt'
+    searched_file = f'{os.path.splitext(file)[0]}.txt'
     for path, dirs, files in os.walk('alt'):
         if searched_file in files:
             with open(os.path.join('alt', searched_file), 'r') as ff:
@@ -104,7 +104,7 @@ def publication_photo(file, saved_photo, token, group_id):
 def delete_file_and_comment(file):
     os.remove(os.path.join('files', file))
 
-    comment_file = os.path.splitext(file)[0] + '.txt'
+    comment_file = f'{os.path.splitext(file)[0]}.txt'
     os.remove(os.path.join('alt', comment_file))
 
 
