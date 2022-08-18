@@ -35,18 +35,20 @@ def load_photo_to_server(upload_address, file):
 
 def save_photo_in_group_album(info_from_server, upload_address, token, group_id):
     url = 'https://api.vk.com/method/photos.saveWallPhoto'
+    user_id = upload_address['user_id']
+    photo = info_from_server['photo']
+    server = info_from_server['server']
+    hash = info_from_server['hash']
+
     params = {
         'access_token': token,
         'v': 5.131,
 
-        'user_id': upload_address['user_id'],
+        'user_id': user_id,
         'group_id': group_id,
-        'photo': info_from_server['photo'],
-        'server': info_from_server['server'],
-        'hash': info_from_server['hash'],
-        'latitude': '',
-        'longitude': '',
-        'caption': '',
+        'photo': photo,
+        'server': server,
+        'hash': hash,
     }
 
     response = requests.post(url, params=params)
