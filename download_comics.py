@@ -22,11 +22,15 @@ def download_random_comic():
     response_img = requests.get(url_img)
     response_img.raise_for_status()
 
-    with open(os.path.join('files', img_file), 'wb') as img_file:
+    file_path = os.path.join('files', img_file)
+
+    with open(file_path, 'wb') as img_file:
         img_file.write(response_img.content)
 
-    with open(os.path.join('alt', f'{img_name}.txt'), 'w') as text_file:
-        text_file.write(comment)
+    # with open(os.path.join('alt', f'{img_name}.txt'), 'w') as text_file:
+    #     text_file.write(comment)
+
+    return file_path, comment
 
 
 if __name__ == '__main__':

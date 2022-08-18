@@ -1,5 +1,4 @@
 import os
-import random
 import requests
 from dotenv import load_dotenv
 
@@ -23,10 +22,10 @@ def get_upload_address(token, group_id):
 
 
 def load_photo_to_server(upload_address, file):
-    with open(os.path.join('files', file), 'rb') as file:
+    with open(file, 'rb') as ff:
         url = upload_address['upload_url']
         files = {
-            'photo': file,
+            'photo': ff,
         }
         response = requests.post(url, files=files)
         response.raise_for_status()
@@ -34,16 +33,7 @@ def load_photo_to_server(upload_address, file):
     return response.json()
 
 
-def find_file_comment(file):
-    searched_file = f'{os.path.splitext(file)[0]}.txt'
-    for path, dirs, files in os.walk('alt'):
-        if searched_file in files:
-            with open(os.path.join('alt', searched_file), 'r') as ff:
-                return ff.read()
-        return ''
-
-
-def save_photo_in_group_album(info_from_server, upload_address, file, token, group_id):
+def save_photo_in_group_album(info_from_server, upload_address, token, group_id):
     url = 'https://api.vk.com/method/photos.saveWallPhoto'
     params = {
         'access_token': token,
@@ -64,11 +54,10 @@ def save_photo_in_group_album(info_from_server, upload_address, file, token, gro
     return response.json()['response']
 
 
-def publicate_photo(file, saved_photo, token, group_id):
+def publicate_photo(comment, saved_photo, token, group_id):
     url = 'https://api.vk.com/method/wall.post'
     negative_group_id = f'-{group_id}'
 
-    message = find_file_comment(file)
     photo_id = saved_photo[0]['id']
     photo_owner_id = saved_photo[0]['owner_id']
 
@@ -79,7 +68,7 @@ def publicate_photo(file, saved_photo, token, group_id):
         'owner_id': negative_group_id,
         'friends_only': 0,
         'from_group': 1,
-        'message': message,
+        'message': comment,
         'attachments': f'photo{photo_owner_id}_{photo_id}',
         'signed': 1,
         'mark_as_ads': 0,
@@ -92,10 +81,7 @@ def publicate_photo(file, saved_photo, token, group_id):
 
 
 def delete_file_and_comment(file):
-    os.remove(os.path.join('files', file))
-
-    comment_file = f'{os.path.splitext(file)[0]}.txt'
-    os.remove(os.path.join('alt', comment_file))
+    os.remove(file)
 
 
 if __name__ == '__main__':
@@ -103,16 +89,11 @@ if __name__ == '__main__':
     token = os.environ['ACCESS_TOKEN']
     group_id = os.environ['GROUP_ID']
 
-    download_random_comic()
-
-    for path, dirs, files in os.walk('files'):
-        pictures = files
-    file = random.choice(pictures)
+    file_path, comment = download_random_comic()
 
     upload_address = get_upload_address(token=token, group_id=group_id)
-    response_from_server = load_photo_to_server(upload_address, file=file)
-    saved_photo = save_photo_in_group_album(response_from_server, upload_address, file=file, token=token,
-                                            group_id=group_id)
-    publicate_photo(file=file, saved_photo=saved_photo, token=token, group_id=group_id)
+    response_from_server = load_photo_to_server(upload_address, file=file_path)
+    saved_photo = save_photo_in_group_album(response_from_server, upload_address, token=token, group_id=group_id)
+    publicate_photo(comment=comment, saved_photo=saved_photo, token=token, group_id=group_id)
 
-    delete_file_and_comment(file)
+    delete_file_and_comment(file_path)
