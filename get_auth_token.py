@@ -3,10 +3,7 @@ import requests
 from dotenv import load_dotenv
 
 
-def get_auth_token():
-    load_dotenv()
-    client_id = os.environ['APPS_CLIENT_ID']
-
+def get_auth_token(client_id):
     url = 'https://oauth.vk.com/authorize'
     params = {'client_id': client_id,
               'redirect_uri': '',
@@ -23,4 +20,6 @@ def get_auth_token():
 
 
 if __name__ == '__main__':
-    get_auth_token()
+    load_dotenv()
+    client_id = os.environ['APPS_CLIENT_ID']
+    get_auth_token(client_id)

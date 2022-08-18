@@ -6,33 +6,8 @@ import requests
 from dotenv import load_dotenv
 
 
-# def get_all_my_groups():
-#     load_dotenv()
-#
-#     url = 'https://api.vk.com/method/groups.get'
-#     token = os.environ['ACCESS_TOKEN']
-#     params = {'access_token': token,
-#               'v': 5.131,
-#
-#               'user_id': '',
-#               'extended': '',
-#               'filter': '',
-#               'fields': '',
-#               'offset': '',
-#               'count': '',
-#               }
-#
-#     response = requests.get(url, params=params)
-#     print(response.text)
-#     response.raise_for_status()
-
-
-def get_upload_address():
-    load_dotenv()
-
+def get_upload_address(token, group_id):
     url = 'https://api.vk.com/method/photos.getWallUploadServer'
-    token = os.environ['ACCESS_TOKEN']
-    group_id = os.environ['GROUP_ID']
     params = {
         'access_token': token,
         'v': 5.131,
@@ -70,12 +45,8 @@ def find_file_comment(file):
         return ''
 
 
-def save_photo_in_group_album(info_from_server, upload_address, file):
-    load_dotenv()
-
+def save_photo_in_group_album(info_from_server, upload_address, file, token, group_id):
     url = 'https://api.vk.com/method/photos.saveWallPhoto'
-    token = os.environ['ACCESS_TOKEN']
-    group_id = os.environ['GROUP_ID']
     params = {
         'access_token': token,
         'v': 5.131,
@@ -96,12 +67,9 @@ def save_photo_in_group_album(info_from_server, upload_address, file):
     return response.json()['response']
 
 
-def publication_photo(file, saved_photo):
-    load_dotenv()
-
+def publication_photo(file, saved_photo, token, group_id):
     url = 'https://api.vk.com/method/wall.post'
-    token = os.environ['ACCESS_TOKEN']
-    negative_group_id = '-' + os.environ['GROUP_ID']
+    negative_group_id = f'-{group_id}'
 
     message = find_file_comment(file)
     photo_id = saved_photo[0]['id']
@@ -146,13 +114,17 @@ def delete_file_and_comment(file):
 
 
 if __name__ == '__main__':
+    load_dotenv()
+    token = os.environ['ACCESS_TOKEN']
+    group_id = os.environ['GROUP_ID']
+
     for path, dirs, files in os.walk('files'):
         pictures = files
     file = random.choice(pictures)
 
-    upload_address = get_upload_address()
+    upload_address = get_upload_address(token=token, group_id=group_id)
     info_from_server = load_photo_to_server(upload_address, file=file)
-    saved_photo = save_photo_in_group_album(info_from_server, upload_address, file=file)
-    publication_photo(file=file, saved_photo=saved_photo)
+    saved_photo = save_photo_in_group_album(info_from_server, upload_address, file=file, token=token, group_id=group_id)
+    publication_photo(file=file, saved_photo=saved_photo, token=token, group_id=group_id)
 
     delete_file_and_comment(file)
