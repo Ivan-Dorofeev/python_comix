@@ -6,7 +6,9 @@ from urllib.parse import urlparse
 
 
 def download_random_comic():
-    random_number_page = random.randint(1, 2660)
+    max_pages = 2660
+
+    random_number_page = random.randint(1, max_pages)
     all_img_url = f"https://xkcd.com/{random_number_page}/info.0.json"
     response = requests.get(all_img_url)
     response.raise_for_status()
