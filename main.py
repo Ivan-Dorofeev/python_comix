@@ -110,8 +110,9 @@ if __name__ == '__main__':
     file = random.choice(pictures)
 
     upload_address = get_upload_address(token=token, group_id=group_id)
-    info_from_server = load_photo_to_server(upload_address, file=file)
-    saved_photo = save_photo_in_group_album(info_from_server, upload_address, file=file, token=token, group_id=group_id)
+    response_from_server = load_photo_to_server(upload_address, file=file)
+    saved_photo = save_photo_in_group_album(response_from_server, upload_address, file=file, token=token,
+                                            group_id=group_id)
     publicate_photo(file=file, saved_photo=saved_photo, token=token, group_id=group_id)
 
     delete_file_and_comment(file)
