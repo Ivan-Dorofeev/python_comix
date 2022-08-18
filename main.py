@@ -54,7 +54,7 @@ def save_photo_in_group_album(info_from_server, upload_address, token, group_id)
     return response.json()['response']
 
 
-def publicate_photo(comment, saved_photo, token, group_id):
+def publish_photo(comment, saved_photo, token, group_id):
     url = 'https://api.vk.com/method/wall.post'
 
     photo_id = saved_photo[0]['id']
@@ -93,6 +93,6 @@ if __name__ == '__main__':
     upload_address = get_upload_address(token=token, group_id=group_id)
     response_from_server = load_photo_to_server(upload_address, file=file_path)
     saved_photo = save_photo_in_group_album(response_from_server, upload_address, token=token, group_id=group_id)
-    publicate_photo(comment=comment, saved_photo=saved_photo, token=token, group_id=group_id)
+    publish_photo(comment=comment, saved_photo=saved_photo, token=token, group_id=group_id)
 
     delete_file_and_comment(file_path)
