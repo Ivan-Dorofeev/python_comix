@@ -16,13 +16,13 @@ def download_random_comic():
 
     url_img = page['img']
     comment = page['alt']
-    *_, img_name_and_extension = urlparse(url_img).path.split('/')
-    img_name, *_ = img_name_and_extension.split('.')
+    *_, img_filename = urlparse(url_img).path.split('/')
+    img_name, *_ = img_filename.split('.')
 
     response_img = requests.get(url_img)
     response_img.raise_for_status()
 
-    file_path = os.path.join('files', img_name_and_extension)
+    file_path = os.path.join('files', img_filename)
 
     with open(file_path, 'wb') as img_file:
         img_file.write(response_img.content)
