@@ -17,7 +17,6 @@ def download_random_comic():
     url_img = page['img']
     comment = page['alt']
     *_, img_filename = urlparse(url_img).path.split('/')
-    img_name, *_ = img_filename.split('.')
 
     response_img = requests.get(url_img)
     response_img.raise_for_status()
