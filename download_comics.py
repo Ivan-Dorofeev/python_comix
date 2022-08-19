@@ -21,6 +21,9 @@ def download_random_comic():
     response_img = requests.get(url_img)
     response_img.raise_for_status()
 
+    if not os.path.exists('files'):
+        os.makedirs('files')
+
     file_path = os.path.join('files', img_filename)
 
     with open(file_path, 'wb') as img_file:
