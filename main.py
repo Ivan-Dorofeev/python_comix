@@ -87,10 +87,10 @@ if __name__ == '__main__':
     group_id = os.environ['GROUP_ID']
 
     file_path, comment = download_random_comic()
-
-    upload_address = get_upload_address(token=token, group_id=group_id)
-    response_from_server = load_photo_to_server(upload_address, file=file_path)
-    saved_photo = save_photo_in_group_album(response_from_server, upload_address, token=token, group_id=group_id)
-    publish_photo(comment=comment, saved_photo=saved_photo, token=token, group_id=group_id)
-
-    os.remove(file_path)
+    try:
+        upload_address = get_upload_address(token=token, group_id=group_id)
+        response_from_server = load_photo_to_server(upload_address, file=file_path)
+        saved_photo = save_photo_in_group_album(response_from_server, upload_address, token=token, group_id=group_id)
+        publish_photo(comment=comment, saved_photo=saved_photo, token=token, group_id=group_id)
+    finally:
+        os.remove(file_path)
