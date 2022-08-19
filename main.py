@@ -52,7 +52,7 @@ def save_photo_in_group_album(user_id, photo, server, hash, token, group_id):
     return response.json()['response']
 
 
-def publish_photo(comment, photo_id, photo_owner_id, token, group_id):
+def publish_photo(comment, token, photo_id, photo_owner_id, group_id):
     url = 'https://api.vk.com/method/wall.post'
 
     params = {
@@ -81,18 +81,17 @@ if __name__ == '__main__':
 
     file_path, comment = download_random_comic()
     try:
-        upload_address = get_upload_address(token=token, group_id=group_id)
-        response_from_server = load_photo_to_server(upload_address, file=file_path)
+        upload_address = get_upload_address(token, group_id)
+        response_from_server = load_photo_to_server(upload_address, file_path)
 
         user_id = upload_address['user_id']
         photo = response_from_server['photo']
         server = response_from_server['server']
         hash = response_from_server['hash']
-        saved_photo = save_photo_in_group_album(user_id=user_id, photo=photo, server=server,
-                                                hash=hash, token=token, group_id=group_id)
+        saved_photo = save_photo_in_group_album(user_id, photo, server, hash, token, group_id)
 
         photo_id = saved_photo[0]['id']
         photo_owner_id = saved_photo[0]['owner_id']
-        publish_photo(comment=comment, token=token, photo_id=photo_id, photo_owner_id=photo_owner_id, group_id=group_id)
+        publish_photo(comment, token, photo_id, photo_owner_id, group_id)
     finally:
         os.remove(file_path)
