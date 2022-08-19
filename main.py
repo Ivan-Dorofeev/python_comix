@@ -33,12 +33,8 @@ def load_photo_to_server(upload_address, file):
     return response.json()
 
 
-def save_photo_in_group_album(info_from_server, upload_address, token, group_id):
+def save_photo_in_group_album(user_id, photo, server, hash, token, group_id):
     url = 'https://api.vk.com/method/photos.saveWallPhoto'
-    user_id = upload_address['user_id']
-    photo = info_from_server['photo']
-    server = info_from_server['server']
-    hash = info_from_server['hash']
 
     params = {
         'access_token': token,
@@ -56,11 +52,8 @@ def save_photo_in_group_album(info_from_server, upload_address, token, group_id)
     return response.json()['response']
 
 
-def publish_photo(comment, saved_photo, token, group_id):
+def publish_photo(comment, photo_id, photo_owner_id, token, group_id):
     url = 'https://api.vk.com/method/wall.post'
-
-    photo_id = saved_photo[0]['id']
-    photo_owner_id = saved_photo[0]['owner_id']
 
     params = {
         'access_token': token,
@@ -90,7 +83,16 @@ if __name__ == '__main__':
     try:
         upload_address = get_upload_address(token=token, group_id=group_id)
         response_from_server = load_photo_to_server(upload_address, file=file_path)
-        saved_photo = save_photo_in_group_album(response_from_server, upload_address, token=token, group_id=group_id)
-        publish_photo(comment=comment, saved_photo=saved_photo, token=token, group_id=group_id)
+
+        user_id = upload_address['user_id']
+        photo = response_from_server['photo']
+        server = response_from_server['server']
+        hash = response_from_server['hash']
+        saved_photo = save_photo_in_group_album(user_id=user_id, photo=photo, server=server,
+                                                hash=hash, token=token, group_id=group_id)
+
+        photo_id = saved_photo[0]['id']
+        photo_owner_id = saved_photo[0]['owner_id']
+        publish_photo(comment=comment, token=token, photo_id=photo_id, photo_owner_id=photo_owner_id, group_id=group_id)
     finally:
         os.remove(file_path)
