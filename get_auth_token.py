@@ -5,16 +5,14 @@ from dotenv import load_dotenv
 
 def get_auth_token(client_id):
     url = 'https://oauth.vk.com/authorize'
-    params = {'client_id': client_id,
-              'redirect_uri': '',
-              'display': 'mobile',
-              'scope': 'photos,groups,wall,offline',
-              'response_type': 'token',
-              'state': '',
-              'revoke': '',
-              }
+    uploads = {
+        'client_id': client_id,
+        'display': 'mobile',
+        'scope': 'photos,groups,wall,offline',
+        'response_type': 'token',
+    }
 
-    response = requests.get(url, params=params)
+    response = requests.get(url, params=uploads)
     response.raise_for_status()
     return response.url
 
