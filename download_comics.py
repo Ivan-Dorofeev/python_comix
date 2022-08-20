@@ -12,10 +12,10 @@ def download_random_comic():
     img_url = f"https://xkcd.com/{random_number_page}/info.0.json"
     response = requests.get(img_url)
     response.raise_for_status()
-    page = response.json()
+    img_page = response.json()
 
-    url_img = page['img']
-    comment = page['alt']
+    url_img = img_page['img']
+    comment = img_page['alt']
     *_, img_filename = urlparse(url_img).path.split('/')
 
     response_img = requests.get(url_img)
