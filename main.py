@@ -18,19 +18,19 @@ def get_upload_address(token, group_id):
     response.raise_for_status()
 
     upload_address = response.json()['response']
-    return upload_address
+    return upload_address['user_id'], upload_address['upload_url']
 
 
-def load_photo_to_server(upload_address, file):
+def load_photo_to_server(upload_url, file):
     with open(file, 'rb') as ff:
-        url = upload_address['upload_url']
         files = {
             'photo': ff,
         }
-        response = requests.post(url, files=files)
+        response = requests.post(upload_url, files=files)
         response.raise_for_status()
+        server_response = response.json()
 
-    return response.json()
+    return server_response['photo'], server_response['server'], server_response['hash']
 
 
 def save_photo_in_group_album(user_id, photo, server, hash, token, group_id):
@@ -49,7 +49,8 @@ def save_photo_in_group_album(user_id, photo, server, hash, token, group_id):
 
     response = requests.post(url, params=params)
     response.raise_for_status()
-    return response.json()['response']
+    server_response = response.json()['response'][0]
+    return server_response['id'], server_response['owner_id']
 
 
 def publish_photo(comment, token, photo_id, photo_owner_id, group_id):
@@ -81,17 +82,9 @@ if __name__ == '__main__':
 
     file_path, comment = download_random_comic()
     try:
-        upload_address = get_upload_address(vk_token, vk_group_id)
-        response_from_server = load_photo_to_server(upload_address, file_path)
-
-        user_id = upload_address['user_id']
-        photo = response_from_server['photo']
-        server = response_from_server['server']
-        hash = response_from_server['hash']
-        saved_photo = save_photo_in_group_album(user_id, photo, server, hash, vk_token, vk_group_id)
-
-        photo_id = saved_photo[0]['id']
-        photo_owner_id = saved_photo[0]['owner_id']
+        user_id, upload_url = get_upload_address(vk_token, vk_group_id)
+        photo, server, hash = load_photo_to_server(upload_url, file_path)
+        photo_id, photo_owner_id = save_photo_in_group_album(user_id, photo, server, hash, vk_token, vk_group_id)
         publish_photo(comment, vk_token, photo_id, photo_owner_id, vk_group_id)
     finally:
         os.remove(file_path)
