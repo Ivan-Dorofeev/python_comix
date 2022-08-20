@@ -76,22 +76,22 @@ def publish_photo(comment, token, photo_id, photo_owner_id, group_id):
 
 if __name__ == '__main__':
     load_dotenv()
-    token = os.environ['ACCESS_TOKEN']
-    group_id = os.environ['GROUP_ID']
+    vk_token = os.environ['VK_ACCESS_TOKEN']
+    vk_group_id = os.environ['VK_GROUP_ID']
 
     file_path, comment = download_random_comic()
     try:
-        upload_address = get_upload_address(token, group_id)
+        upload_address = get_upload_address(vk_token, vk_group_id)
         response_from_server = load_photo_to_server(upload_address, file_path)
 
         user_id = upload_address['user_id']
         photo = response_from_server['photo']
         server = response_from_server['server']
         hash = response_from_server['hash']
-        saved_photo = save_photo_in_group_album(user_id, photo, server, hash, token, group_id)
+        saved_photo = save_photo_in_group_album(user_id, photo, server, hash, vk_token, vk_group_id)
 
         photo_id = saved_photo[0]['id']
         photo_owner_id = saved_photo[0]['owner_id']
-        publish_photo(comment, token, photo_id, photo_owner_id, group_id)
+        publish_photo(comment, vk_token, photo_id, photo_owner_id, vk_group_id)
     finally:
         os.remove(file_path)
