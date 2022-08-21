@@ -21,8 +21,8 @@ def get_upload_address(token, group_id):
     return upload_address['user_id'], upload_address['upload_url']
 
 
-def load_photo_to_server(upload_url, file):
-    with open(file, 'rb') as ff:
+def load_photo_to_server(upload_url, file_path):
+    with open(file_path, 'rb') as ff:
         files = {
             'photo': ff,
         }
