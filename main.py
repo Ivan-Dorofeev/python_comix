@@ -26,9 +26,9 @@ def load_photo_to_server(upload_url, file):
         files = {
             'photo': ff,
         }
-        response = requests.post(upload_url, files=files)
-        response.raise_for_status()
-        server_response = response.json()
+    response = requests.post(upload_url, files=files)
+    response.raise_for_status()
+    server_response = response.json()
 
     return server_response['photo'], server_response['server'], server_response['hash']
 
