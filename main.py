@@ -33,7 +33,7 @@ def load_photo_to_server(upload_url, file_path):
     return server_response['photo'], server_response['server'], server_response['hash']
 
 
-def save_photo_in_group_album(user_id, photo, server, hash, token, group_id):
+def save_photo_in_group_album(user_id, photo, server, img_hash, token, group_id):
     url = 'https://api.vk.com/method/photos.saveWallPhoto'
 
     params = {
@@ -44,7 +44,7 @@ def save_photo_in_group_album(user_id, photo, server, hash, token, group_id):
         'group_id': group_id,
         'photo': photo,
         'server': server,
-        'hash': hash,
+        'hash': img_hash,
     }
 
     response = requests.post(url, params=params)
