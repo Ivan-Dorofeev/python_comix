@@ -83,8 +83,8 @@ if __name__ == '__main__':
     file_path, comment = download_random_comic()
     try:
         user_id, upload_url = get_upload_address(vk_token, vk_group_id)
-        photo, server, hash = load_photo_to_server(upload_url, file_path)
-        photo_id, photo_owner_id = save_photo_in_group_album(user_id, photo, server, hash, vk_token, vk_group_id)
+        photo, server, img_hash = load_photo_to_server(upload_url, file_path)
+        photo_id, photo_owner_id = save_photo_in_group_album(user_id, photo, server, img_hash, vk_token, vk_group_id)
         publish_photo(comment, vk_token, photo_id, photo_owner_id, vk_group_id)
     finally:
         os.remove(file_path)
